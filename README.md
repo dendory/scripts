@@ -34,10 +34,15 @@ Example:
     .\aws_create_instance.ps1 -AMI ami-d2c924b2 -Subnet subnet-8e3bf3a2 -Type t2.nano -KeyName aws-test -Script c:\scripts\centos_init.sh -Hostname test.example.com -ZoneId Z1W5966G181726
 
 ### aws_destroy_instance.ps1
-
 This script will terminate an EC2 instance, delete the attached volumes, remove the A record.
 
 Example:
 
     .\aws_destroy_instance.ps1 -InstanceId i-XXXXXX -Hostname test.example.com -ZoneId Z1W5966G181726
 
+### Show-Menu.psm1
+Use this function to display a color menu on the console screen. It can display a number of menu items and await a choice, returning this choice. Optionally, it can also display some non-menu options. You can specify a title, a sub title, a prompt, menu options and non-menu options.
+
+Example:
+
+    Show-Menu -Title "This is a test of the menu system" -MenuOptions @("The first choice", "The good choice", "The last choice")
