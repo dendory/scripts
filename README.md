@@ -26,6 +26,8 @@ Use Test-Uptime to compile a list of hosts and test connectivity. Run it on a sc
 ### Show-Chart.psm1
 With Show-Chart you can create a chart on the screen and optionally save it to a file. It uses the Windows Forms control to create the chart, then can be controlled using various parameters. See the examples for details.
 
+![](Show-Chart-sample.jpg)
+
 ### aws_create_instance.ps1
 This script will create an EC2 instance, a key pair to connect, add a Route 53 A record for it.
 
@@ -46,3 +48,41 @@ Use this function to display a color menu on the console screen. It can display 
 Example:
 
     Show-Menu -Title "This is a test of the menu system" -MenuOptions @("The first choice", "The good choice", "The last choice")
+
+![](Show-Menu-sample.jpg)
+
+### Get-Excuse.psm1
+This function returns an excuse to be used in a system administration or helpdesk role, based on the BOFH series. The excuses originate from the Bastard Operator From Hell excuse server at http://pages.cs.wisc.edu/~ballard/bofh/ and were modified to fit this module. Requires bofh.xml
+
+### Get-FileMetadata.psm1
+This function will return all metadata information about a specific file. It can be used to access the information stored in the filesystem.
+
+### Get-GeoIP.psm1
+Each IP block is assigned to a specific organization. This function queries the webservicex.net API to retrieve the last known country for a specific IP.
+
+### Get-RandomPassword.psm1
+This script creates a random password including upper case letters, lower case letters, numbers, and optionally complex characters.
+
+Usage:
+
+    Get-RandomPassword -Length 12 -Complex
+
+### Read-InputBox.psm1
+The Read-InputBox function creates a Windows Forms dialog box with custom text and awaits user input. The dialog box can be customized with various parameters. The text entered is then returned to the user:
+
+![](Read-InputBox-sample.jpg)
+
+### Resize-Image.psm1
+This function uses the native .NET API to resize an image file, and optionally save it to a file or display it on the screen. You can specify a scale or a new resolution for the new image.
+
+Example:
+
+    Resize-Image -InputFile "C:\kitten.jpg" -Scale 30 -OutputFile "C:\kitten2.jpg"
+
+### sanitize.pm
+Returns a sanitized version of strings.
+
+### system_report.ps1
+This should be run on the Task Scheduler every hour as a local administrator. Comment out any section you don't want. The only resource intensive one seems to be Windows Updates. The AntiVirus/AntiMalware sections only work on workstations, they will return empty strings on Windows Server. Look near the bottom of the script to configure alarm report emails / notifications.
+
+![](system_report_sample.jpg)
