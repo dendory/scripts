@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bofh>
+	<excuse>Clock speeds were lowered due to daylight saving time.</excuse>
+	<excuse>Solar flares affected the electronics.</excuse>
+	<excuse>Electromagnetic radiation from satellite debris.</excuse>
+	<excuse>Static from nylon underwear caused a power surge.</excuse>
+	<excuse>Global warming.</excuse>
+	<excuse>Poor power conditioning.</excuse>
+	<excuse>Static build-up in the accelerators.</excuse>
+	<excuse>Doppler effect.</excuse>
+	<excuse>Hardware stress fractures.</excuse>
+	<excuse>Magnetic interference from chips in new credit cards.</excuse>
+	<excuse>Dry joints on cable plugs.</excuse>
+	<excuse>The phone lines were dug up and the phone company hasn't fixed them yet.</excuse>
+	<excuse>Microsoft support is on the case.</excuse>
+	<excuse>Temporary routing anomaly.</excuse>
+	<excuse>Somebody was calculating pi on the server.</excuse>
+	<excuse>Fat electrons are clogging up the tubes.</excuse>
+	<excuse>Excess surge protection is a bad thing.</excuse>
+	<excuse>The floating point processor overflowed.</excuse>
+	<excuse>Divide-by-zero error.</excuse>
+	<excuse>POSIX compliance problem.</excuse>
+	<excuse>Monitor resolution is too high.</excuse>
+	<excuse>Improperly oriented keyboard.</excuse>
+	<excuse>Network packets travelling uphill caused a slowdown.</excuse>
+	<excuse>Decreasing electron flux.</excuse>
+	<excuse>The CPU radiator broke.</excuse>
+	<excuse>It was broken, now it works the way it was always supposed to.</excuse>
+	<excuse>The positron router malfunctioned.</excuse>
+	<excuse>Cellular telephone interference.</excuse>
+	<excuse>Tectonic stress caused a rupture in bus lines.</excuse>
+	<excuse>PCI bus drivers are on strike.</excuse>
+	<excuse>Piezo-electric drivers caused interference.</excuse>
+	<excuse>Error between keyboard and screen.</excuse>
+	<excuse>The dynamic software linking table was corrupted.</excuse>
+	<excuse>Heavy gravity fluctuations, move your computer to the floor.</excuse>
+	<excuse>The secretary plugged a hair dryer into the UPS.</excuse>
+	<excuse>Terrorist activities.</excuse>
+	<excuse>Not enough memory, close some programs.</excuse>
+	<excuse>Interrupt configuration was interrupted.</excuse>
+	<excuse>Spaghetti cable caused a packet failure.</excuse>
+	<excuse>Boss forgot the system password.</excuse>
+	<excuse>It's a bank holiday, all systems are off.</excuse>
+	<excuse>Virus attack.</excuse>
+	<excuse>Waste water tank overflowed onto servers.</excuse>
+	<excuse>Complete transient lockout event.</excuse>
+	<excuse>Bad ether in the cables.</excuse>
+	<excuse>Bogon emissions.</excuse>
+	<excuse>Change in the Earth's rotational speed.</excuse>
+	<excuse>Cosmic ray particles crashed through the hard disk platter.</excuse>
+	<excuse>Smell from unhygienic janitorial staff wrecked the tape heads.</excuse>
+	<excuse>The hamster died, waiting for replacement to be Fedex'ed over.</excuse>
+	<excuse>Evil dogs hypnotised the night shift.</excuse>
+	<excuse>A plumber mistook routing panel for decorative wall fixture.</excuse>
+	<excuse>Electricians made popcorn in the power supply.</excuse>
+	<excuse>Groundskeepers stole the root password.</excuse>
+	<excuse>High pressure systems failed.</excuse>
+	<excuse>Failed trials, system needs to be redesigned.</excuse>
+	<excuse>The server had to be recalled.</excuse>
+	<excuse>The operation was not approved by the FCC.</excuse>
+	<excuse>Need to wrap system in aluminium foil to fix the problem.</excuse>
+	<excuse>The computer is not properly grounded, try burying it.</excuse>
+	<excuse>CPU needs recalibration, bang on the case a few times.</excuse>
+	<excuse>System needs to be rebooted twice.</excuse>
+	<excuse>The bit bucket overflowed.</excuse>
+	<excuse>Code was descrambled and needs to be recompiled.</excuse>
+	<excuse>It's on a need to know basis.</excuse>
+	<excuse>Knots in cables caused data streams to become twisted.</excuse>
+	<excuse>Nesting roaches shorted out the network.</excuse>
+	<excuse>The file system is full of it.</excuse>
+	<excuse>You're out of memory.</excuse>
+	<excuse>There isn't any problem.</excuse>
+	<excuse>Unoptimized hard drive caused lost files.</excuse>
+	<excuse>Typo in the code requires recompiling.</excuse>
+	<excuse>A design limitation prevented the operation from completing.</excuse>
+	<excuse>A General Protection Fault caused the failure.</excuse>
+	<excuse>The AC line was plugged in the DC socket.</excuse>
+	<excuse>A mouse deleted the files.</excuse>
+	<excuse>Support staff are too hung over, send an aspirin.</excuse>
+	<excuse>Someone is standing on the Ethernet cable causing a kink in the cable.</excuse>
+	<excuse>It's an undocumented feature.</excuse>
+	<excuse>Runt packets caused a drop in connection.</excuse>
+	<excuse>The password is too complex to decrypt.</excuse>
+	<excuse>Electromagnetic energy loss caused a server reboot.</excuse>
+	<excuse>Budget cuts made this operation impossible anymore.</excuse>
+	<excuse>A mouse chewed through power cables.</excuse>
+	<excuse>Stale file handles.</excuse>
+	<excuse>The feature not yet implemented.</excuse>
+	<excuse>Internet outage, call the provider.</excuse>
+	<excuse>Vendor no longer supports the product.</excuse>
+	<excuse>Small animal kamikaze attack on power supplies.</excuse>
+	<excuse>The vendor put the bug there.</excuse>
+	<excuse>SIMM crosstalk.</excuse>
+	<excuse>The IRQ dropped out.</excuse>
+	<excuse>Collapsed Backbone caused a network outage.</excuse>
+	<excuse>Power company causing voltage spikes.</excuse>
+	<excuse>Operators are on strike due to broken coffee machines.</excuse>
+	<excuse>Backup tapes were overwritten with Minecraft.</excuse>
+	<excuse>The UPS interrupted the server's power.</excuse>
+	<excuse>The keyboard isn't plugged into the right port.</excuse>
+	<excuse>The air conditioning water supply pipe ruptured on the server.</excuse>
+	<excuse>The rolling stones concert down the road caused a brown out.</excuse>
+	<excuse>The salesman drove over the CPU board.</excuse>
+	<excuse>The monitor is plugged into the serial port.</excuse>
+	<excuse>Root name servers are out of sync.</excuse>
+	<excuse>Electro-magnetic pulses from nuke tests in the 60s.</excuse>
+	<excuse>Your keyboard's space bar is generating spurious keycodes.</excuse>
+	<excuse>The printer thinks it's a router.</excuse>
+	<excuse>The router thinks it's a printer.</excuse>
+	<excuse>Hackers stole the code.</excuse>
+	<excuse>We just switched to FDDI.</excuse>
+	<excuse>The halon system went off and killed the server operators.</excuse>
+	<excuse>Sticky bits are on the disk.</excuse>
+	<excuse>The connection was refused.</excuse>
+	<excuse>You put the disk in upside down.</excuse>
+	<excuse>Daemons loose in the system.</excuse>
+	<excuse>NSA spying caused an endless loop.</excuse>
+	<excuse>Disks are spinning backwards.</excuse>
+	<excuse>Communications satellite is being used by the military for star wars.</excuse>
+	<excuse>Someone needed the power strip.</excuse>
+	<excuse>Big to little endian conversion error.</excuse>
+	<excuse>Dumb terminal problem.</excuse>
+	<excuse>Zombie processes are haunting the computer.</excuse>
+	<excuse>Defunct processes.</excuse>
+	<excuse>A lack of "any" key on the keyboard.</excuse>
+	<excuse>Excessive collisions on the network and not enough packet ambulances.</excuse>
+	<excuse>Broadcast packets are on the wrong frequency.</excuse>
+	<excuse>The GET command did a POST.</excuse>
+	<excuse>SOAP fell on the floor.</excuse>
+	<excuse>The adapter failed to adapt.</excuse>
+	<excuse>Pseudo-user was not on a pseudo-terminal.</excuse>
+	<excuse>Recursive traversal of loopback mount points.</excuse>
+	<excuse>Vapors from evaporating sticky-note adhesives.</excuse>
+	<excuse>The virtual machine ran out of virtual.</excuse>
+	<excuse>The VM was not physical enough.</excuse>
+	<excuse>The VHD was removed from the server.</excuse>
+	<excuse>A bug in the management software shut off all the VMs.</excuse>
+	<excuse>The file system is not big enough for Jumbo packets.</excuse>
+	<excuse>The processor is on fire.</excuse>
+	<excuse>A runaway cat on the system.</excuse>
+	<excuse>Me no internet, only janitor, me just wax floors.</excuse>
+	<excuse>Virtual memory capacity was exceeded.</excuse>
+	<excuse>Quantum dynamics are affecting the transistors.</excuse>
+	<excuse>Only people with names beginning with 'A' are getting mail this week.</excuse>
+	<excuse>We didn't pay the Internet bill and it's been cut off.</excuse>
+	<excuse>Lightning struck the server.</excuse>
+	<excuse>The software upgrade caused the issue.</excuse>
+	<excuse>It only works in Finnish.</excuse>
+	<excuse>High nuclear activity in your area.</excuse>
+	<excuse>The UPS doesn't have a battery backup.</excuse>
+	<excuse>Recursivity error. Call back if it happens again.</excuse>
+	<excuse>Someone thought The Big Red Button was a light switch.</excuse>
+	<excuse>The mainframe needs to rest, it's getting old.</excuse>
+	<excuse>The lines are all busy.</excuse>
+	<excuse>VOIP ran out of IP.</excuse>
+	<excuse>Fatal error right in front of the screen.</excuse>
+	<excuse>We had to turn off that service to comply with the CDA Bill.</excuse>
+	<excuse>Ionization from the air-conditioning.</excuse>
+	<excuse>The CPU needs bearings repacked.</excuse>
+	<excuse>Software uses US measurements, but the OS is in metric.</excuse>
+	<excuse>Your cat tried to eat the mouse.</excuse>
+	<excuse>The Borg tried to assimilate your system.</excuse>
+	<excuse>Due to Federal Budget deficit caused a loss of money to maintain the servers.</excuse>
+	<excuse>Too much radiation coming from the soil.</excuse>
+	<excuse>Unfortunately we have run out of bits. Our next supply comes next month.</excuse>
+	<excuse>Program load is too heavy for the processor to lift.</excuse>
+	<excuse>We've run out of licenses.</excuse>
+	<excuse>Interference from lunar radiation.</excuse>
+	<excuse>You need to install a RTFM interface.</excuse>
+</bofh>
