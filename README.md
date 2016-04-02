@@ -88,3 +88,7 @@ Produces an HTML report of available file shares.
 This should be run on the Task Scheduler every hour as a local administrator. Comment out any section you don't want. The only resource intensive one seems to be Windows Updates. The AntiVirus/AntiMalware sections only work on workstations, they will return empty strings on Windows Server. Look near the bottom of the script to configure alarm report emails / notifications.
 
 ![](system_report_sample.jpg)
+
+### adhmailadd.ps1
+This script creates an Active Directory user and an hMailServer user.
+
