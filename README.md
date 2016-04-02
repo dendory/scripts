@@ -8,10 +8,14 @@ An unofficial pushbullet script to send Pushbullet notifications to all your dev
 
 Syntax:
 
-    python3 pushbullet.py -key XXXXXXXXXXXXX -title "Test message" -body "This is a test"
+    python3 pushbullet.py -key XXXXXXXXXXXXX -title "Test message" -message "This is a test"
 
 ### check_ssl.ps1
 PowerShell script that retrieves information about a the SSL certificate.
+
+Syntax:
+
+    .\check_ssl.ps1 -URL https://example.com -Timeout 10
 
 ### r53nslookup
 This is a PowerShell script that allows you to easily do a DNS lookup on any of your Route 53 Amazon records.
