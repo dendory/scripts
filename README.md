@@ -1,5 +1,6 @@
 # scripts
 Utility scripts made by myself over the years. They are provided under the MIT License
+
 http://dendory.net/
 
 ### pushbullet.py
@@ -16,3 +17,19 @@ Use Test-Uptime to compile a list of hosts and test connectivity. Run it on a sc
 
 ### Show-Chart.psm1
 With Show-Chart you can create a chart on the screen and optionally save it to a file. It uses the Windows Forms control to create the chart, then can be controlled using various parameters. See the examples for details.
+
+### aws_create_instance.ps1
+This script will create an EC2 instance, a key pair to connect, add a Route 53 A record for it.
+
+Example:
+
+    .\aws_create_instance.ps1 -AMI ami-d2c924b2 -Subnet subnet-8e3bf3a2 -Type t2.nano -KeyName aws-test -Script c:\scripts\centos_init.sh -Hostname test.example.com -ZoneId Z1W5966G181726
+
+### aws_destroy_instance.ps1
+
+This script will terminate an EC2 instance, delete the attached volumes, remove the A record.
+
+Example:
+
+    .\aws_destroy_instance.ps1 -InstanceId i-XXXXXX -Hostname test.example.com -ZoneId Z1W5966G181726
+
