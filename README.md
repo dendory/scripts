@@ -79,8 +79,10 @@ Example:
 
     Resize-Image -InputFile "C:\kitten.jpg" -Scale 30 -OutputFile "C:\kitten2.jpg"
 
-### sanitize.pm
-Returns a sanitized version of strings.
+### share_report.ps1
+Produces an HTML report of available file shares.
+
+![](share_report_sample.jpg)
 
 ### system_report.ps1
 This should be run on the Task Scheduler every hour as a local administrator. Comment out any section you don't want. The only resource intensive one seems to be Windows Updates. The AntiVirus/AntiMalware sections only work on workstations, they will return empty strings on Windows Server. Look near the bottom of the script to configure alarm report emails / notifications.
