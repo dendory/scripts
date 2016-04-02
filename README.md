@@ -6,6 +6,10 @@ http://dendory.net/
 ### pushbullet.py
 An unofficial pushbullet script to send Pushbullet notifications to all your devices.
 
+Syntax:
+
+    python3 pushbullet.py -key XXXXXXXXXXXXX -title "Test message" -body "This is a test"
+
 ### check_ssl.ps1
 PowerShell script that retrieves information about a the SSL certificate.
 
