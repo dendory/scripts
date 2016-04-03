@@ -92,3 +92,23 @@ This should be run on the Task Scheduler every hour as a local administrator. Co
 ### adhmailadd.ps1
 This script creates an Active Directory user and an hMailServer user.
 
+### pi-playlist.py
+This script will play a number of mp3 files in random order
+
+### wikipedia_define.py
+Uses the wikipedia module to define words on the command line
+
+### rssfeed.py
+Converts a RSS feed into an HTML output
+
+### event_monitor.ps1
+Monitors the event log fromn the console
+
+### logins.ps1
+Shows a graphical list of user logins.
+
+### inactive_users.ps1
+Lists all AD users who haven't logged in 90 days
+
+### indexed.ps1
+Search the Windows file system for files modified within the last week using the Windows Search indexer
