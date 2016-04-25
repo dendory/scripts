@@ -2,6 +2,11 @@
 # This script will terminate an EC2 instance based on the configuration passed to it.
 # Made by Patrick Lambert released under the MIT license.
 #
+# Prerequisites:
+# 1- Download the AWS PowerShell tools from: http://aws.amazon.com/powershell
+# 2- Create an IAM user with the Route 53 all api access policy enabled
+# 3- Store your IAM user credentials locally: Set-AWSCredentials -AccessKey XXXXX -SecretKey ZZZZZ -StoreAs default
+#
 # -InstanceId The EC2 instance id to terminate
 # -Hostname The hostname to remove for this host
 # -ZoneId The Route53 zone ID on which to remove the hostname
@@ -21,9 +26,9 @@ Stop-EC2Instance $InstanceId -Force -Terminate
 # Remove the EBS
 foreach($volume in $volumes)
 {
-    [string]$volid = $volume.VolumeId
-    Write-Host "Removing EBS volume $volid..."
-    Remove-EC2Volume -VolumeId $volid -Force
+	[string]$volid = $volume.VolumeId
+	Write-Host "Removing EBS volume $volid..."
+	Remove-EC2Volume -VolumeId $volid -Force
 }
 
 # Remove A record

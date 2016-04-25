@@ -2,6 +2,11 @@
 # This script will create an EC2 instance based on the configuration passed to it.
 # Made by Patrick Lambert released under the MIT license.
 #
+# Prerequisites:
+# 1- Download the AWS PowerShell tools from: http://aws.amazon.com/powershell
+# 2- Create an IAM user with the Route 53 all api access policy enabled
+# 3- Store your IAM user credentials locally: Set-AWSCredentials -AccessKey XXXXX -SecretKey ZZZZZ -StoreAs default
+#
 # -AMI The Amazon image to use, for example CentOS for us-west-2 is available as ami-d2c924b2
 # -Subnet The AWS subnet ID to use
 # -Type The instance type, for example t2.nano
@@ -18,11 +23,11 @@ $ErrorActionPreference = "Stop"
 $keys = Get-EC2KeyPair
 if($keys.KeyName -notcontains $KeyName)
 {
-  Write-Host "Creating key pair and saving to '$($KeyName).pem'..."
-  $keypair1 = New-EC2KeyPair -KeyName $KeyName
-  "$($keypair1.KeyMaterial)" | out-file -encoding ascii -filepath "$($KeyName).pem"
-  "KeyName: $($keypair1.KeyName)" | out-file -encoding ascii -filepath "$($KeyName).pem" -Append
-  "KeyFingerprint: $($keypair1.KeyFingerprint)" | out-file -encoding ascii -filepath "$($KeyName).pem" -Append
+	Write-Host "Creating key pair and saving to '$($KeyName).pem'..."
+	$keypair1 = New-EC2KeyPair -KeyName $KeyName
+	"$($keypair1.KeyMaterial)" | out-file -encoding ascii -filepath "$($KeyName).pem"
+	"KeyName: $($keypair1.KeyName)" | out-file -encoding ascii -filepath "$($KeyName).pem" -Append
+	"KeyFingerprint: $($keypair1.KeyFingerprint)" | out-file -encoding ascii -filepath "$($KeyName).pem" -Append
 }
 
 # Create the EC2 instance
@@ -34,14 +39,14 @@ $new = $b.Instances[0].InstanceId
 Write-Host "Instance $new created, waiting for running state..."
 while($true)
 {
-  $a = Get-EC2Instance -Filter @{Name = "instance-id"; Value = $new} |select * -ExpandProperty Instances
-  $state = $a.Instances[0].State.Name.Value
-  if($state -eq "running")
-  {
-  break;
-  }
-  "Waiting..."
-  Sleep -Seconds 5
+	$a = Get-EC2Instance -Filter @{Name = "instance-id"; Value = $new} |select * -ExpandProperty Instances
+	$state = $a.Instances[0].State.Name.Value
+	if($state -eq "running")
+	{
+		break;
+	}
+	"Waiting..."
+	Sleep -Seconds 5
 }
 
 $result = Get-EC2Instance -Filter @{Name = "instance-id"; Value = $new} |select * -ExpandProperty Instances
