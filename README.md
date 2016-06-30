@@ -3,6 +3,9 @@ Utility scripts made by myself over the years. They are provided under the MIT L
 
 http://dendory.net/
 
+### ad.bat
+This script will add a batch of sample users to your AD structure based on a few criteria you provide.
+
 ### pushbullet.py
 An unofficial pushbullet script to send Pushbullet notifications to all your devices.
 
