@@ -118,3 +118,6 @@ Search the Windows file system for files modified within the last week using the
 
 ### backup_github.py
 This script will download all master branches on Github for a specific user.
+
+### check-website.ps1
+This script will check a web page every 10 secs and show you a message box should it become unavailable or return an error message.
