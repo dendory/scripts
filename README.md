@@ -121,3 +121,6 @@ This script will download all master branches on Github for a specific user.
 
 ### check-website.ps1
 This script will check a web page every 10 secs and show you a message box should it become unavailable or return an error message.
+
+### make-random-ad-users.ps1
+Uses a web API to get random names, emails, addresses and so on then makes AD users
