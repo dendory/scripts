@@ -123,4 +123,7 @@ This script will download all master branches on Github for a specific user.
 This script will check a web page every 10 secs and show you a message box should it become unavailable or return an error message.
 
 ### make-random-ad-users.ps1
-Uses a web API to get random names, emails, addresses and so on then makes AD users
+Uses a web API to get random names, emails, addresses and so on then makes AD users.
+
+### make-random-users.py
+Uses a web API to create random users on a Linux system.
