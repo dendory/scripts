@@ -1,20 +1,36 @@
-# This script returns information about a site's SSL certificate
+# This script checks a list of web sites and retrieves certificate information
 #
-# -URL The URL to check
+# -Sites An array of web sites to check 
+# -MinimumAge Warn if the certificate will expire in less than this amount of days (optional)
 # -Timeout The timeout in seconds (optional)
 #
-param([Parameter(Mandatory=$true)][string]$URL, [Int32]$Timeout = 10)
+# Example: .\check_ssl.ps1 -Sites @('https://google.com', 'https://yahoo.com') -MinimumAge 10
+#
+param([Parameter(Mandatory=$true)][string[]]$Sites, [Int32]$MinimumAge = 1, [Int32]$Timeout = 10)
 $ErrorActionPreference = "Continue"
-[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+[Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 
-$req = [System.Net.HttpWebRequest]::Create($URL)
-$req.Timeout = $Timeout * 1000
-$req.GetResponse() | Out-Null
-$Certificate = New-Object PSObject
-$Certificate | Add-Member -NotePropertyName "Name" -NotePropertyValue $req.ServicePoint.Certificate.GetName()
-$Certificate | Add-Member -NotePropertyName "Issuer" -NotePropertyValue $req.ServicePoint.Certificate.GetIssuerName()
-$Certificate | Add-Member -NotePropertyName "Expiration" -NotePropertyValue $req.ServicePoint.Certificate.GetExpirationDateString()
-$Certificate | Add-Member -NotePropertyName "Thumbnail" -NotePropertyValue $req.ServicePoint.Certificate.GetCertHashString()
-$Certificate | Add-Member -NotePropertyName "Serial Number" -NotePropertyValue $req.ServicePoint.Certificate.GetSerialNumberString()
-$Certificate | Add-Member -NotePropertyName "Public Key" -NotePropertyValue $req.ServicePoint.Certificate.GetPublicKeyString()
-$Certificate
+foreach ($site in $Sites)
+{
+	Write-Host "* Checking $site..."
+	$req = [Net.HttpWebRequest]::Create($site)
+	$req.Timeout = $Timeout * 1000
+	try
+	{
+		$req.GetResponse() | Out-Null
+		[datetime]$cert_exp = $req.ServicePoint.Certificate.GetExpirationDateString()
+		$cert_thumb = $req.ServicePoint.Certificate.GetCertHashString()
+		if($MinimumAge -gt ($cert_exp - $(get-date)).Days)
+		{
+			Write-Host "Error: Certificate expires on $cert_exp" -ForegroundColor red
+		}
+		else
+		{
+			Write-Host "Success: $cert_thumb" -ForegroundColor green
+		}
+	}
+	catch
+	{
+		Write-Host "Error: $_" -ForegroundColor red
+	}
+}
