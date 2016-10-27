@@ -1,0 +1,25 @@
+include /usr/share/nano/python.nanorc
+include /usr/share/nano/html.nanorc
+include /usr/share/nano/xml.nanorc
+include /usr/share/nano/perl.nanorc
+include /usr/share/nano/sh.nanorc
+include /usr/share/nano/php.nanorc
+include /usr/share/nano/c.nanorc
+include /usr/share/nano/makefile.nanorc
+bind ^Z undo all
+bind ^Y redo all
+bind ^Space mark all
+bind ^L copytext all
+bind ^B browser all
+bind ^. nextbuf all
+bind ^, prevbuf all
+bind ^N nextpage all
+bind ^P prevpage all
+set tabsize 4
+set speller "aspell -x -c"
+set softwrap
+set nowrap
+set nohelp
+set multibuffer
+set const
+set undo
