@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  remote_user: centos
+  tasks:
+  - name: Installing packages
+    yum: name={{item}} state=latest
+    with_items:
+     - httpd
+     - php
+  - name: Fetching config
+    get_url:
+      url: https://dendory.net/scripts/centos-httpd.conf
+      dest: /etc/httpd/conf/httpd.conf
+      force: yes
+  - name: Restarting Apache
+    service: state=restarted name=httpd enabled=yes
+  - name: Making info.php page
+    get_url:
+      url: https://dendory.net/scripts/phpinfo
+      dest: /var/www/html/info.php
+      force: yes

@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: true
+  remote_user: centos
+  vars:
+    env: test
+  tasks:
+  - name: Setting hostname
+    hostname: name={{env + '-' + ansible_all_ipv4_addresses[0].split('.')[3]}}
+  - name: Disabling SELinux
+    selinux: state=disabled
+  - name: Updating all packages
+    yum: name=* state=latest
+  - name: Adding EPEL key
+    command: rpm --import http://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+  - name: Installing EPEL
+    yum_repository: name=epel description="EPEL YUM repo" baseurl=http://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+  - name: Installing additional packages
+    yum: name={{item}} state=latest
+    with_items:
+    - yum-cron
+    - nano
+    - scl-utils
+    - python34
+    - psmisc
+  - name: Fetching nanorc
+    get_url:
+      url: https://dendory.net/scripts/nanorc
+      dest: /etc/nanorc
+
