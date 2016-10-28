@@ -7,8 +7,12 @@
   tasks:
   - name: Setting hostname
     hostname: name={{env + '-' + ansible_all_ipv4_addresses[0].split('.')[3]}}
+  - name: AWS hostname workaround
+    lineinfile: line='preserve_hostname{{ ":" }} true' dest=/etc/cloud/cloud.cfg
   - name: Disabling SELinux
     selinux: state=disabled
+  - name: Removing targeted policy to fix potential update crash
+    yum: name=selinux-policy-targeted state=absent
   - name: Updating all packages
     yum: name=* state=latest
   - name: Adding EPEL key
