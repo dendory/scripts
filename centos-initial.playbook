@@ -9,6 +9,8 @@
     hostname: name={{env + '-' + ansible_all_ipv4_addresses[0].split('.')[3]}}
   - name: AWS hostname workaround
     lineinfile: line='preserve_hostname{{ ":" }} true' dest=/etc/cloud/cloud.cfg
+  - name: Adding name to hosts
+    lineinfile: line='{{ansible_all_ipv4_addresses[0]}}  {{env + '-' + ansible_all_ipv4_addresses[0].split('.')[3]}}' dest=/etc/hosts
   - name: Disabling SELinux
     selinux: state=disabled
   - name: Removing targeted policy to fix potential update crash
@@ -27,6 +29,7 @@
     - scl-utils
     - python34
     - psmisc
+    - bind-utils
   - name: Fetching nanorc
     get_url:
       url: https://dendory.net/scripts/nanorc
