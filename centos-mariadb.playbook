@@ -1,0 +1,33 @@
+---
+- hosts: all
+  become: true
+  remote_user: centos
+  vars:
+    rootpwd: Password1
+    dbname: tests
+  tasks:
+  - name: Installing packages
+    yum: name={{item}} state=latest
+    with_items:
+     - mariadb
+     - mariadb-server
+     - galera
+     - mariadb-devel
+  - name: Installing Python module
+    pip: name=MySQL-python
+  - name: Binding to all interface
+    lineinfile: dest=/etc/my.cnf regexp="^bind-address" line="bind-address=0.0.0.0"
+  - name: Starting services
+    service: state=started name=mariadb enabled=yes
+  - name: Securing root account
+    mysql_user: name=root password={{ rootpwd }} priv=*.*:ALL state=present 
+    ignore_errors: yes
+  - name: Client configuration
+    lineinfile: dest=/root/.my.cnf line={{ item }} mode=0600 create=yes
+    with_items:
+    - "[client]"
+    - user=root
+    - password={{ rootpwd }}
+  - name: Making database
+    mysql_db: name={{ dbname }} state=present
+

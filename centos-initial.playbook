@@ -30,6 +30,10 @@
     - python34
     - psmisc
     - bind-utils
+    - python-pip
+    - python-devel
+    - libtool
+    - rpm-build
   - name: Fetching nanorc
     get_url:
       url: https://dendory.net/scripts/nanorc
