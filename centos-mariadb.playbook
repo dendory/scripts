@@ -4,6 +4,7 @@
   remote_user: centos
   vars:
     rootpwd: Password1
+    replipwd: Password2
     dbname: tests
   tasks:
   - name: Installing packages
@@ -11,14 +12,18 @@
     with_items:
      - mariadb
      - mariadb-server
-     - galera
      - mariadb-devel
   - name: Installing Python module
     pip: name=MySQL-python
-  - name: Binding to all interface
-    lineinfile: dest=/etc/my.cnf regexp="^bind-address" line="bind-address=0.0.0.0"
-  - name: Starting services
-    service: state=started name=mariadb enabled=yes
+  - name: Server configuration
+    lineinfile: dest=/etc/my.cnf line={{ item }} mode=0644 create=yes
+    with_items:
+    - bind-address=0.0.0.0
+    - log-bin
+    - server_d={{ ansible_all_ipv4_addresses[0].split('.')[3] }}
+    - log-basename=log{{ ansible_all_ipv4_addresses[0].split('.')[3] }}
+  - name: Restarting services
+    service: state=restarted name=mariadb enabled=yes
   - name: Securing root account
     mysql_user: name=root password={{ rootpwd }} priv=*.*:ALL state=present 
     ignore_errors: yes
