@@ -2,18 +2,21 @@
 - hosts: all
   become: true
   remote_user: centos
-  vars:
-    dashboard: https://your-server/healthstone
-    template: default
   tasks:
   - name: Fetching Healthstone
     unarchive: src=https://healthstone.ca/healthstone-agent-linux.tar dest=/tmp remote_src=yes copy=no
   - name: Running install script and starting service
     command: chdir=/tmp/healthstone {{item}}
-    ignore_errors: yes
     with_items:
     - ./install.sh {{dashboard}} {{template}}
+  - name: Stopping previously running agent
+    command: chdir=/tmp/healthstone {{item}}
+    ignore_errors: yes
+    with_items:
     - pkill -f healthstone.py
+  - name: Starting agent
+    command: chdir=/tmp/healthstone {{item}}
+    with_items:
     - chmod +x /etc/rc.d/rc.local
     - nohup /etc/rc.local
   - name: Cleaning up

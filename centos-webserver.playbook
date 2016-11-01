@@ -1,7 +1,6 @@
 ---
 - hosts: all
   become: true
-  remote_user: centos
   tasks:
   - name: Installing packages
     yum: name={{item}} state=latest

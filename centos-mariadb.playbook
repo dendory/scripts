@@ -1,13 +1,6 @@
 ---
 - hosts: all
   become: true
-  remote_user: centos
-  vars:
-    rootpwd: Password1
-    replipwd: Password2
-    syspwd: Password3
-    dbname: tests
-    master: 172.30.1.21
   tasks:
   - name: Installing packages
     yum: name={{item}} state=latest
@@ -15,6 +8,7 @@
      - mariadb
      - mariadb-server
      - mariadb-devel
+     - php-mysql
   - name: Installing Python module
     pip: name=MySQL-python
   - name: Server configuration

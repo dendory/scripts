@@ -71,15 +71,15 @@ def usage():
 	info("Usage: aws.py <command> [options]")
 	print()
 	info("Available commands:")
-	print("list-vms [-v|instance id]                             : List all VMs, or details on one VM")
-	print("start-vm <instance id>                                : Start a VM")
-	print("stop-vm <instance id>                                 : Stop a VM")
-	print("restart-vm <instance id>                              : Reboot a VM")
+	print("list-vms [-v|instance id|name]                        : List all VMs, or details on one VM")
+	print("start-vm <instance id|name>                           : Start a VM")
+	print("stop-vm <instance id|name>                            : Stop a VM")
+	print("restart-vm <instance id|name>                         : Reboot a VM")
 	print("delete-vm <instance id>                               : Terminate a VM")
-	print("set-name <instance id> <name>                         : Change the name of a VM")
+	print("set-tag <instance id|name> <tag> <value>              : Change the tag of a VM")
 	print("list-templates [-v]                                   : List existing templates")
 	print("create-template                                       : Create a new VM template")
-	print("create-vm <vm name> <template to use> [-w]            : Create a new VM based on a template")
+	print("create-vm <vm name|%> <template to use> [-w]          : Create a new VM based on a template")
 	print("dump-inventory <file> [filter]                        : Put all internal IPs in a text file")
 	print("create-volume <instance id> <device name> <size in GB>: Create a new volume and attach to a VM")
 	print("attach-volume <instance id> <device name> <volume id> : Attach an existing volume to a VM")
@@ -212,7 +212,7 @@ def create_vm(name, template, dowait):
 		instance = instance[0]
 		print("Instance ID: " + instance.id)
 		print("Private IP: " + instance.private_ip_address)
-		ec2.create_tags(Resources = [instance.id], Tags = [{'Key': 'Name', 'Value': name}])
+		ec2.create_tags(Resources = [instance.id], Tags = [{'Key': 'Name', 'Value': name.replace('%',instance.private_ip_address.split('.')[3])}])
 		if dowait:
 			info("Waiting for running state...")
 			instance.wait_until_running()
@@ -471,11 +471,11 @@ elif sys.argv[1].lower() == 'restart-vm':
 	else:
 		if restart_vm(sys.argv[2]):
 			success("Done.")
-elif sys.argv[1].lower() == 'set-name':
-	if len(sys.argv) != 4:
+elif sys.argv[1].lower() == 'set-tag':
+	if len(sys.argv) != 5:
 		fail("Invalid number of arguments")
 	else:
-		if set_tag(sys.argv[2], "Name", sys.argv[3]):
+		if set_tag(sys.argv[2], sys.argv[3], sys.argv[4]):
 			success("Done.")
 elif sys.argv[1].lower() == 'delete-vm':
 	if len(sys.argv) != 3:
@@ -565,16 +565,22 @@ elif sys.argv[1].lower() == 'list-dns-zones':
 			info(zone['Id'].replace('/hostedzone/','') + ": " + zone['Name'])
 			sets = list_record_sets(zone['Id'])
 			for set in sets:
-				for rr in set['ResourceRecords']:
-					print(set['Name'] + " " + set['Type'] + " : " + rr['Value'])
+				if "ResourceRecords" in set:
+					for rr in set['ResourceRecords']:
+						print(set['Name'] + " " + set['Type'] + " : " + rr['Value'])
+				elif "AliasTarget" in set:
+					print(set['Name'] + " " + set['Type'] + " : ALIAS " + set['AliasTarget']['DNSName'])
 elif sys.argv[1].lower() == 'list-dns-records':
 	if len(sys.argv) != 3:
 		fail("Invalid number of arguments")
 	else:
 		sets = list_record_sets(sys.argv[2])
 		for set in sets:
-			for rr in set['ResourceRecords']:
-				print(set['Name'] + " " + set['Type'] + " : " + rr['Value'])
+			if "ResourceRecords" in set:
+				for rr in set['ResourceRecords']:
+					print(set['Name'] + " " + set['Type'] + " : " + rr['Value'])
+			elif "AliasTarget" in set:
+				print(set['Name'] + " " + set['Type'] + " : ALIAS " + set['AliasTarget']['DNSName'])
 elif sys.argv[1].lower() == 'create-dns-record':
 	if len(sys.argv) != 6:
 		fail("Invalid number of arguments")

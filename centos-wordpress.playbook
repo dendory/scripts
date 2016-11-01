@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Installing WordPress
+    yum: name={{item}} state=latest
+    with_items:
+     - httpd
+     - wordpress
+  - name: Setting DocumentRoot
+    replace: dest=/etc/httpd/conf/httpd.conf regexp="^DocumentRoot.*" replace="DocumentRoot /usr/share/wordpress"
+  - name: Setting DirectoryIndex
+    replace: dest=/etc/httpd/conf/httpd.conf regexp="^DirectoryIndex.*" replace="DirectoryIndex index.html index.php"
+  - name: Setting database name
+    replace: dest=/etc/wordpress/wp-config.php regexp=".*DB_NAME.*" replace="define('DB_NAME', '{{ dbname }}');"
+  - name: Setting database user
+    replace: dest=/etc/wordpress/wp-config.php regexp=".*DB_USER.*" replace="define('DB_USER', 'sys');"
+  - name: Setting database password
+    replace: dest=/etc/wordpress/wp-config.php regexp=".*DB_PASSWORD.*" replace="define('DB_PASSWORD', '{{ syspwd }}');"
+  - name: Removing default HTTP file
+    file: path=/etc/httpd/conf.d/wordpress.conf state=absent
+  - name: Restarting Apache
+    service: state=restarted name=httpd enabled=yes

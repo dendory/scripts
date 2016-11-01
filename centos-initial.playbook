@@ -1,9 +1,6 @@
 ---
 - hosts: all
   become: true
-  remote_user: centos
-  vars:
-    env: test
   tasks:
   - name: Setting hostname
     hostname: name={{env + '-' + ansible_all_ipv4_addresses[0].split('.')[3]}}
