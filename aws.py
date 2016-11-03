@@ -95,9 +95,11 @@ def usage():
 	print("list-public-ips                                       : List current elastic IPs")
 	print("create-public-ip                                      : Allocate a new elastic IP")
 	print("delete-public-ip <address id>                         : Revoke an elastic IP")
+	print("attach-public-ip <address id> <instance id|name>      : Attach an IP to a VM")
+	print("detach-public-ip <address id>                         : Detach an IP from a VM")
 	print("list-load-balancers                                   : List all load balancers")
-	print("attach-balanced-vm <balancer id> <instance id>        : Attach a VM to a load balancer")
-	print("detach-balanced-vm <balancer id> <instance id>        : Detach a VM from a load balancer")
+	print("attach-balanced-vm <balancer id> <instance id|name>   : Attach a VM to a load balancer")
+	print("detach-balanced-vm <balancer id> <instance id|name>   : Detach a VM from a load balancer")
 
 #
 # AWS operations
@@ -171,6 +173,35 @@ def stop_vm(instid):
 	except:
 		a, b, c = sys.exc_info()
 		fail("Could not stop VM: " + str(b))
+		return False
+
+def attach_ip(ipid, instid):
+	try:
+		if instid[0:1] != "i-":
+			for ins in list_vms():
+				if ins['name'] == instid:
+					instid = ins['id']
+		ec2 = boto3.client("ec2")
+		resp = ec2.associate_address(InstanceId=instid, AllocationId=ipid)
+		return resp['AssociationId']
+	except:
+		a, b, c = sys.exc_info()
+		fail("Could not associate IP: " + str(b))
+		return None
+
+def detach_ip(ipid):
+	try:
+		ec2 = boto3.client("ec2")
+		ips = list_ips()
+		for ip in ips:
+			if ip['AllocationId'] == ipid and "AssociationId" in ip:
+				resp = ec2.disassociate_address(AssociationId=ip['AssociationId'])
+				return True
+		print("No association found.")
+		return False
+	except:
+		a, b, c = sys.exc_info()
+		fail("Could not detach IP: " + str(b))
 		return False
 
 def restart_vm(instid):
@@ -628,6 +659,17 @@ elif sys.argv[1].lower() == 'delete-public-ip':
 		fail("Invalid number of arguments")
 	else:
 		if revoke_ip(sys.argv[2]):
+			success("Done.")
+elif sys.argv[1].lower() == 'attach-public-ip':
+	if len(sys.argv) != 4:
+		fail("Invalid number of arguments")
+	else:
+		print(attach_ip(sys.argv[2], sys.argv[3]))
+elif sys.argv[1].lower() == 'detach-public-ip':
+	if len(sys.argv) != 3:
+		fail("Invalid number of arguments")
+	else:
+		if detach_ip(sys.argv[2]):
 			success("Done.")
 elif sys.argv[1].lower() == 'list-public-ips':
 	ips = list_ips()
