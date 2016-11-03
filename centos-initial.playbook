@@ -25,6 +25,7 @@
     - nano
     - scl-utils
     - python34
+    - python34-devel
     - psmisc
     - bind-utils
     - python-pip

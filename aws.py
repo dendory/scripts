@@ -3,8 +3,8 @@
 # Simple AWS automation script - Patrick Lambert - http://dendory.net
 # Prerequisites: `pip3 install boto3` and `aws configure`
 #
-import sys
 import os
+import sys
 import json
 import time
 cfgfile = os.path.join(os.path.expanduser("~"), ".aws.templates")
@@ -81,6 +81,7 @@ def usage():
 	print("create-template                                       : Create a new VM template")
 	print("create-vm <vm name|%> <template to use> [-w]          : Create a new VM based on a template")
 	print("dump-inventory <file> [filter]                        : Put all internal IPs in a text file")
+	print("get-password <instance id|name> [key file]            : Retrieve the password of a Windows VM")
 	print("create-volume <instance id> <device name> <size in GB>: Create a new volume and attach to a VM")
 	print("attach-volume <instance id> <device name> <volume id> : Attach an existing volume to a VM")
 	print("detach-volume <volume id>                             : Detach a volume from a VM")
@@ -186,6 +187,24 @@ def restart_vm(instid):
 		a, b, c = sys.exc_info()
 		fail("Could not restart VM: " + str(b))
 		return False
+
+def get_password(instid, keyfile):
+	try:
+		if instid[0:1] != "i-":
+			for ins in list_vms():
+				if ins['name'] == instid:
+					instid = ins['id']
+		ec2 = boto3.client("ec2")
+		data = ec2.get_password_data(InstanceId=instid)
+		if keyfile:
+			cmd = "echo \"" + "".join(data['PasswordData'].split()) + "\" |base64 -d |openssl rsautl -decrypt -inkey \"" + keyfile + "\""
+			return os.popen(cmd).read()
+		else:
+			return data['PasswordData']
+	except:
+		a, b, c = sys.exc_info()
+		fail("Could not fetch password: " + str(b))
+		return None
 
 def delete_vm(instid):
 	try:
@@ -471,6 +490,13 @@ elif sys.argv[1].lower() == 'restart-vm':
 	else:
 		if restart_vm(sys.argv[2]):
 			success("Done.")
+elif sys.argv[1].lower() == 'get-password':
+	if len(sys.argv) == 3:
+		print(get_password(sys.argv[2], None))
+	elif len(sys.argv) == 4:
+		print(get_password(sys.argv[2], sys.argv[3]))
+	else:
+		fail("Invalid number of arguments")
 elif sys.argv[1].lower() == 'set-tag':
 	if len(sys.argv) != 5:
 		fail("Invalid number of arguments")
