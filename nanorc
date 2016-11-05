@@ -6,6 +6,7 @@ include /usr/share/nano/sh.nanorc
 include /usr/share/nano/php.nanorc
 include /usr/share/nano/c.nanorc
 include /usr/share/nano/makefile.nanorc
+include /usr/share/nano/tex.nanorc
 bind ^Z undo all
 bind ^Y redo all
 bind ^Space mark all

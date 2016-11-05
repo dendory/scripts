@@ -227,6 +227,8 @@ def get_password(instid, keyfile):
 					instid = ins['id']
 		ec2 = boto3.client("ec2")
 		data = ec2.get_password_data(InstanceId=instid)
+		if data['PasswordData'] == "":
+			return ""
 		if keyfile:
 			cmd = "echo \"" + "".join(data['PasswordData'].split()) + "\" |base64 -d |openssl rsautl -decrypt -inkey \"" + keyfile + "\""
 			return os.popen(cmd).read()
