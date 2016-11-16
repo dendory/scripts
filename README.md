@@ -127,3 +127,7 @@ Uses a web API to get random names, emails, addresses and so on then makes AD us
 
 ### make-random-users.py
 Uses a web API to create random users on a Linux system.
+
+### *.playbook
+Sample playbooks for Ansible.
+

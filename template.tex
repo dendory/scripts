@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage[top=2cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+\usepackage[pages=some]{background}
+\usepackage{xcolor}
+\usepackage{fontspec}
+
+% Background image
+\backgroundsetup
+{
+scale=1,
+color=white,
+opacity=0.4,
+angle=0,
+contents={\includegraphics[width=\paperwidth,height=\paperheight]{ice_background}}
+}
+
+% Break margins for the title
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+% Shade box
+\definecolor{shade}{HTML}{EEF3F3}
+
+% Default and title fonts
+\setmainfont{Calibri}
+\newfontfamily\mytitle[Ligatures=TeX,Scale=5.5]{Calibri}
+
+% Title page
+\begin{document}
+\BgThispage
+\begin{changemargin}{-1.5cm}{-1cm}
+\pgfsetfillopacity{0.5}{\colorbox{shade}{\pgfsetfillopacity{1}{\mytitle Some fancy title}}}
+\end{changemargin}
+\clearpage
+
+% Rest of the document
+Normal text
+
+\end{document}
+

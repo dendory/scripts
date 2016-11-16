@@ -1,0 +1,55 @@
+% This form can be filled up and then saved. It can then be emailed back with the entered values.
+% Compile with: pdflatex form.tex
+
+\documentclass[12pt]{article}
+
+\usepackage{geometry}
+\geometry{a4paper, right=1.5cm, left=1.5cm, top=2cm, bottom=1.5cm}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[english]{babel}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+\usepackage{indentfirst}
+\usepackage{setspace}
+
+\usepackage{xcolor}
+\definecolor{qcolor}{rgb}{0.5,0.8,0.7}
+
+\usepackage{hyperref}
+\newcommand{\q}[2]{\TextField[width=#1,height=10pt,bordercolor=qcolor]{#2}}
+\newcommand{\cm}[2]{\ChoiceMenu[radio,radiosymbol=\ding{52},name=#1,bordercolor=qcolor]{}{#2}}
+
+\begin{document}
+\begin{Form}
+
+\section{Introduction}
+
+This form can be filled up and then saved. It can then be emailed back with the entered values.
+
+\q{12cm}{Your full name: }
+
+\subsection{Location}
+
+\q{2cm}{Number: } \q{6cm}{ Street: }  \q{2cm}{ Apart: }
+
+\q{8cm}{City: } \q{4cm}{ Zip code: }
+
+\subsection{Survey}
+
+What is your favorite color:
+\cm{favcolor}{Red}
+\cm{favcolor}{Orange}
+\cm{favcolor}{Pink}
+
+Is the sky blue?
+\cm{skyblue}{Yes}
+\cm{skyblue}{No}
+\q{5cm}{ Why? }
+
+\end{Form}
+
+\end{document}
+  
