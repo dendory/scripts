@@ -16,15 +16,6 @@ section = False
 if len(sys.argv) > 4:
 	section = sys.argv[4]
 
-def in_tag(s, first, last):
-	try:
-		start = s.index(first) + len(first)
-		tmp = s[start:]
-		end = tmp.index(last)
-		return tmp[:end].replace('\n','').replace('\r','').strip()
-	except ValueError:
-		return ""
-
 try:
 	with open(file, 'r') as fd:
 		data = fd.read()
