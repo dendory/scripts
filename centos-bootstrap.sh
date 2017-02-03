@@ -34,6 +34,7 @@ yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-p
 #
 yum -y install httpd php
 systemctl enable httpd
+systemctl start httpd
 echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 
 #
