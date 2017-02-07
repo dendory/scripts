@@ -28,6 +28,7 @@ wget https://ca.mirror.babylon.network/epel/epel-release-latest-7.noarch.rpm -O 
 rpm -ivh /tmp/epel.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
 yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build
+systemctl disable firewalld
 
 #
 # Install web server
@@ -42,4 +43,4 @@ echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 #
 yum -y update
 yum -y install yum-cron
-
+reboot
