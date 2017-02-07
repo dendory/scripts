@@ -48,7 +48,7 @@ echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 # Install SSL support and LetsEncrypt
 #
 yum -y install python-certbot-apache certbot mod_ssl
-letsencrypt certonly --standalone --email $EMAIL -d $NAME.$DOMAIN -w /var/www/html --agree-tos
+letsencrypt certonly --standalone --email $EMAIL -d $NAME.$DOMAIN -w /var/www/html --agree-tos --renew-by-default -n
 mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.default
 wget https://dendory.net/scripts/centos-httpd-ssl.conf -O /etc/httpd/conf/httpd.conf
 sed -i "s/%HOSTNAME%/$NAME.$DOMAIN/g" /etc/httpd/conf/httpd.conf
