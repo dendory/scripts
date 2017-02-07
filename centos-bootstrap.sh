@@ -1,12 +1,17 @@
 #!/bin/bash
+# CentOS 7 bootstrapping script - Configuration:
+
+export NAME=%NAME%
+export DOMAIN=dendory.net
+export EMAIL=dendory@live.ca
 
 #
 # Set hostname and networking
 #
-echo "%NAME%.dendory.net" > /etc/hostname
+echo "$NAME.$DOMAIN" > /etc/hostname
 chattr +i /etc/hostname
-echo "search dendory.net" > /etc/resolv.conf
-echo "domain dendory.net" >> /etc/resolv.conf
+echo "search $DOMAIN" > /etc/resolv.conf
+echo "domain $DOMAIN" >> /etc/resolv.conf
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 chattr +i /etc/resolv.conf
 echo "preserve_hostname: true" >> /etc/cloud/cloud.cfg
@@ -26,6 +31,7 @@ yum -y install wget
 rpm --import https://ca.mirror.babylon.network/epel/RPM-GPG-KEY-EPEL-7
 wget https://ca.mirror.babylon.network/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel.rpm
 rpm -ivh /tmp/epel.rpm
+rm -f /tmp/epel.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
 yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build
 systemctl disable firewalld
@@ -39,8 +45,23 @@ systemctl start httpd
 echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 
 #
+# Install SSL support and LetsEncrypt
+#
+yum -y install python-certbot-apache certbot mod_ssl
+letsencrypt certonly --standalone --email $EMAIL -d $NAME.$DOMAIN -w /var/www/html
+mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.default
+wget https://dendory.net/scripts/centos-httpd-ssl.conf -O /etc/httpd/conf/httpd.conf
+sed -i "s/%HOSTNAME%/$NAME.$DOMAIN/g" /etc/httpd/conf/httpd.conf
+systemctl restart httpd
+crontab -l > /tmp/mycron
+echo "0 0 1 * * /usr/sbin/certbot renew" >> /tmp/mycron
+crontab /tmp/mycron
+rm -f /tmp/mycron
+
+#
 # Update the system
 #
 yum -y update
 yum -y install yum-cron
 reboot
+
