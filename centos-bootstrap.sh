@@ -34,6 +34,9 @@ rpm -ivh /tmp/epel.rpm
 rm -f /tmp/epel.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
 yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build
+curl https://bootstrap.pypa.io/get-pip.py | python3
+rm -f /usr/bin/pip
+ln -s /usr/bin/pip2.7 /usr/bin/pip
 systemctl disable firewalld
 
 #
