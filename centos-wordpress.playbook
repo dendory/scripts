@@ -6,6 +6,7 @@
     yum: name={{item}} state=latest
     with_items:
      - httpd
+     - mariadb
      - wordpress
   - name: Setting DocumentRoot
     replace: dest=/etc/httpd/conf/httpd.conf regexp="^DocumentRoot.*" replace="DocumentRoot /usr/share/wordpress"

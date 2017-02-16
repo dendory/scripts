@@ -497,7 +497,7 @@ elif sys.argv[1].lower() == 'create-snapshot':
 		for i in list_vms():
 			if i['id'] == sys.argv[2].lower():
 				for v in i['volumes']:
-					print(v + ": " + create_snapshot(v, sys.argv[3]))
+					print(v['id'] + ": " + create_snapshot(v['id'], sys.argv[3]))
 		success("Done.")
 elif sys.argv[1].lower() == 'delete-snapshot':
 	if len(sys.argv) != 3:
