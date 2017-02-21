@@ -37,6 +37,7 @@ yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-p
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
+wget https://dendory.net/scripts/util.py -O /usr/lib/python3.4/site-packages/util.py
 systemctl disable firewalld
 
 #

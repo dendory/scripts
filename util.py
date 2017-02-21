@@ -2,7 +2,7 @@
 # Random utilities - (C) 2017 Patrick Lambert - http://dendory.net
 # Provided under the MIT License
 
-__VERSION__ = "2017.2.16"
+__VERSION__ = "2"
 
 import os
 import sys
@@ -144,7 +144,15 @@ def curl(url):
 	charset = stream.info().get_param('charset', 'utf8')
 	return result.decode(charset)
 
-
+def in_list(ldict, key, value):
+	"""Find whether a key/value pair is inside of a list of dictionaries.
+			@param ldict: List of dictionaries
+			@param key: The key to use for comparision
+			@param value: The value to look for
+	"""
+	if next((i for i, item in enumerate(ldict) if item[key] == value), -1) > 0:
+		return True
+	return False
 
 
 
@@ -155,7 +163,7 @@ def _test(func, args):
 	""" Test a function with optional arguments.
 	"""
 	possibles = globals().copy()
-	print("* util." + func + str(args).replace('[','(').replace(']',')'))
+	print("* util." + func + "(" + str(args)[1:-1] + ")")
 	method = possibles.get(func)
 	#print(method.__doc__)
 	try:
@@ -188,4 +196,5 @@ if __name__ == '__main__':
 	_test("form", [])
 	_test("email", ["root@localhost", "root@localhost", "Test 1 2 3", "This is\na\ntest!"])
 	_test("curl", ["http://google.com/does.not.exist"])
+	_test("in_list", [[{'id': "1", 'text': "Hello world"}, {'id': "2", 'text': "World hello"}, {'id': "3", 'text': "!"}], "id", "4"])
 
