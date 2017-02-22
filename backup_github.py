@@ -2,21 +2,21 @@
 #
 # This will backup all master branches of the following GitHub user:
 user = "dendory"
-target_file = "~/github_backup.tgz"
+target_file = "/tmp/github_backup.tgz"
 
-import os
+import util
 import json
-import urllib.parse
-import urllib.request
+import os
 
-stream = urllib.request.urlopen("https://api.github.com/users/" + user + "/repos")
-result = stream.read()
-charset = stream.info().get_param('charset', 'utf8')
-repos = json.loads(result.decode(charset))
-
+repos = json.loads(util.curl("https://api.github.com/users/" + user + "/repos"))
 os.system("mkdir /tmp/github")
+
 for repo in repos:
-	os.system("cd /tmp/github && wget https://github.com/" + repo["full_name"] + "/archive/master.zip && mv master.zip " + repo["name"] + ".zip"")
+	if not repo["fork"]:
+		print(str(repo["name"]))
+		os.system("cd /tmp/github && wget -q https://github.com/" + repo["full_name"] + "/archive/master.zip && mv master.zip " + repo["name"] + ".zip")
+
 os.system("cd /tmp && tar czf " + target_file + " github")
 os.system("rm -rf /tmp/github")
-
+os.system("/usr/bin/dropbox.sh upload /tmp/github_backup.tgz Backups/github_backup.tgz")
+os.system("rm -f /tmp/github_backup.tgz")

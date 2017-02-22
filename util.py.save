@@ -72,7 +72,7 @@ def unixtime():
 	"""
 	return int(time.time())
 
-def now(timestamp=time.gmtime()):
+def datetime(timestamp=time.gmtime()):
 	""" Return the current UTC date and time in a standard format.
 			@param timestamp: The time object to use (optional)
 	"""
@@ -156,8 +156,7 @@ def download(url, localfile):
 			@param url: The url of the file
 			@param localfile: Where to save that file
 	"""
-	urllib.request.urlretrieve(url, localfile)
-	return os.stat(localfile).st_size
+	return urllib.request.urlretrieve(url, localfile)
 
 def in_list(ldict, key, value):
 	""" Find whether a key/value pair is inside of a list of dictionaries.
@@ -179,17 +178,7 @@ def cmd(command):
 	""" Run a command and return the output.
 			@param command: The command to run
 	"""
-	return os.popen(command).read().rstrip('\n')
-
-def ask(question, default=""):
-	""" Ask a question with a default answer.
-			@param question: The question to ask
-			@param default: The default answer (optional)
-	"""
-	tmp = input(question + " [" + str(default) + "]: ")
-	if tmp == "":
-		return default
-	return tmp
+	return os.popen(command).read()
 
 
 
@@ -224,7 +213,7 @@ if __name__ == '__main__':
 	_test("save", [jsonfile, data])
 	_test("load", [jsonfile])
 	_test("unixtime", [])
-	_test("now", [])
+	_test("datetime", [])
 	_test("hashfile", [jsonfile])
 	_test("hashfile", ["/doesnotexist"])
 	_test("error", [])
@@ -236,7 +225,4 @@ if __name__ == '__main__':
 	_test("in_list", [[{'id': "1", 'text': "Hello world"}, {'id': "2", 'text': "World hello"}, {'id': "3", 'text': "!"}], "id", "4"])
 	_test("remove_spaces", ["  This is  a test of   the \"emergency  broadcast system\". "])
 	_test("cmd", ["ps aux | wc -l"])
-	saveto = "/tmp/" + guid() + ".html"
-	_test("download", ["http://www.cnn.com", saveto])
-	_test("ask", ["Type something", "nothing"])
-
+	_test("download", ["http://ipv4.download.thinkbroadband.com/5MB.zip", "/tmp
