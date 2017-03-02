@@ -2,7 +2,7 @@
 #
 # This will backup all master branches of the following GitHub user:
 user = "dendory"
-target_file = "/tmp/github_backup.tgz"
+target_file = "/storage/backups/github_backup.tgz"
 
 import util
 import json
@@ -18,5 +18,3 @@ for repo in repos:
 
 os.system("cd /tmp && tar czf " + target_file + " github")
 os.system("rm -rf /tmp/github")
-os.system("/usr/bin/dropbox.sh upload /tmp/github_backup.tgz Backups/github_backup.tgz")
-os.system("rm -f /tmp/github_backup.tgz")

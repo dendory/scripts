@@ -192,7 +192,19 @@ def ask(question, default=""):
 		return default
 	return tmp
 
-
+def alphanum(text, symbols=False, spaces=False):
+	""" Return only letters, numbers and optionally basic symbols and spaces in a string.
+			@param text: The string to process
+			@param symbols: Whether to leave basic symbols
+			@param spaces: Whether to leave spaces
+	"""
+	if spaces and symbols:
+		return re.sub('[^0-9a-zA-Z \_\-\.\[\]\(\)\@\!\?\:\'\;]+', '', text)
+	elif spaces:
+		return re.sub('[^0-9a-zA-Z ]+', '', text)
+	elif symbols:
+		return re.sub('[^0-9a-zA-Z\_\-\.\[\]\(\)\@\!\?\:\'\;]+', '', text)
+	return re.sub('[^0-9a-zA-Z]+', '', text)
 
 
 
@@ -239,5 +251,6 @@ if __name__ == '__main__':
 	_test("cmd", ["ps aux | wc -l"])
 	saveto = "/tmp/" + guid() + ".html"
 	_test("download", ["http://www.cnn.com", saveto])
+	_test("alphanum", ["Some escape attempt\"); cat /etc/passwd", True, True])
 	_test("ask", ["Type something", "nothing"])
 
