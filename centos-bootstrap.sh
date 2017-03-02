@@ -25,19 +25,23 @@ echo "SELINUXTYPE=targeted" >> /etc/selinux/config
 setenforce 0
 
 #
-# Install EPEL and missing packages
+# Install EPEL, Nux and missing packages
 #
 yum -y install wget
 rpm --import https://ca.mirror.babylon.network/epel/RPM-GPG-KEY-EPEL-7
 wget https://ca.mirror.babylon.network/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel.rpm
 rpm -ivh /tmp/epel.rpm
 rm -f /tmp/epel.rpm
+rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
-yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build
+yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
 wget https://dendory.net/scripts/util.py -O /usr/lib/python3.4/site-packages/util.py
+pip install mutagen ansible awscli certbot evernote Markdown MySQL-python
+pip3 install pycrypto boto3
 systemctl disable firewalld
 
 #

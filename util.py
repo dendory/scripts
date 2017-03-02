@@ -23,7 +23,7 @@ def guid(length=16):
 	""" Return a unique ID based on the machine, current time in milliseconds, and random number.
 			@param length: The length of the ID (optional, defaults to 16 bytes)
 	"""
-	hw = str(hex(uuid.getnode() + int(time.time()*1000)))[2:]
+	hw = str(hex(uuid.getnode() + int(time.time()*1000000)))[2:]
 	pad = ''.join(random.choice(string.ascii_uppercase + string.digits) for i in range(length-len(hw)))
 	return str(hw + pad).upper()
 
@@ -165,8 +165,9 @@ def in_list(ldict, key, value):
 			@param key: The key to use for comparision
 			@param value: The value to look for
 	"""
-	if next((i for i, item in enumerate(ldict) if item[key] == value), -1) > 0:
-		return True
+	for l in ldict:
+		if l[key] == value:
+			return True
 	return False
 
 def remove_spaces(text):
