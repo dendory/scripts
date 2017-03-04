@@ -108,6 +108,8 @@ def remote_ip():
 def form():
 	""" Return the GET and POST variables in a CGI application.
 	"""
+	import cgitb
+	cgitb.enable(context=1)
 	result = {}
 	form = cgi.FieldStorage()
 	for key in form.keys():
