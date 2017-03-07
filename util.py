@@ -2,7 +2,7 @@
 # Random utilities - (C) 2017 Patrick Lambert - http://dendory.net
 # Provided under the MIT License
 
-__VERSION__ = "2"
+__VERSION__ = "2017.3.3"
 
 import re
 import os
@@ -14,6 +14,7 @@ import json
 import types
 import string
 import random
+import fnmatch
 import hashlib
 import smtplib
 import urllib.parse
@@ -208,6 +209,18 @@ def alphanum(text, symbols=False, spaces=False):
 		return re.sub('[^0-9a-zA-Z\_\-\.\[\]\(\)\@\!\?\:\'\;]+', '', text)
 	return re.sub('[^0-9a-zA-Z]+', '', text)
 
+def list_files(folder, pattern="*"):
+	""" Return a list of files in a folder recursively.
+			@param folder: The folder to list files from
+			@param pattern: The pattern files must match (optional)
+	"""
+	matches = []
+	for root, dirnames, filenames in os.walk(folder):
+		for filename in fnmatch.filter(filenames, pattern):
+			matches.append(os.path.join(root, filename))
+	return matches
+
+
 
 
 
@@ -254,5 +267,5 @@ if __name__ == '__main__':
 	saveto = "/tmp/" + guid() + ".html"
 	_test("download", ["http://www.cnn.com", saveto])
 	_test("alphanum", ["Some escape attempt\"); cat /etc/passwd", True, True])
+	_test("list_files", ["/etc/httpd", "*.conf"])
 	_test("ask", ["Type something", "nothing"])
-
