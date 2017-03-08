@@ -146,10 +146,16 @@ def curl(url, encoding="utf8", cookie=None):
 			@param cookie: The cookie string in format key1=value1;key2=value2 (optional)
 	"""
 	if cookie:
-		con = urllib.request.Request(url, headers={'Cookie': cookie})
-		stream = urllib.request.urlopen(con)
+		headers = {
+			'Cookie': cookie,
+			'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+		}
 	else:
-		stream = urllib.request.urlopen(url)
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+		}
+	con = urllib.request.Request(url, headers=headers)
+	stream = urllib.request.urlopen(con)
 	result = stream.read()
 	charset = stream.info().get_param('charset', encoding)
 	return result.decode(charset)
