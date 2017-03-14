@@ -117,11 +117,15 @@ def form():
 		result[key] = form.getvalue(key)
 	return result
 
-def header(content_type="text/html"):
+def header(content_type="text/html", filename=None):
 	""" Return the header needed for a CGI application.
 			@param content_type: The type of content delivered (optional, defaults to text/html)
+			@param filename: Set the content to be a downloadable file (optional)
 	"""
-	return "Content-Type: " + str(content_type) + "; charset=utf-8\n\n"
+	output = "Content-Type: " + str(content_type) + "; charset=utf-8\n\n"
+	if filename:
+		output = "Content-Disposition: attachment; filename=" + filename + "\n" + output
+	return output
 
 def error():
 	""" Return the error message after an exception. Must be used in an 'except' statement.
