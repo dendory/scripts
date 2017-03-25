@@ -9,9 +9,9 @@ if len(sys.argv) != 4 and len(sys.argv) != 5:
 	print("Syntax: " + sys.argv[0] + " <filename> <tag> <replacement text> [section]")
 	quit(1)
 
-file = sys.argv[1]
-tag = sys.argv[2]
-text = sys.argv[3]
+file = str(sys.argv[1])
+tag = str(sys.argv[2])
+text = str(sys.argv[3])
 section = False
 if len(sys.argv) > 4:
 	section = sys.argv[4]

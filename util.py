@@ -52,6 +52,28 @@ def in_tag(text, first, last=None):
 	except ValueError:
 		return ""
 
+def args(format="dict"):
+	""" Return the arguments passed to the script, divided by spaces or dashes.
+			@param format: Whether to return as a space separated string or as a dash separated dict
+	"""
+	p = ""
+	sys.argv.pop(0)
+	for arg in sys.argv:
+		p += arg + " "
+	if format.lower() != "dict":
+		if len(p) > 0:
+			return p[:-1]
+		else:
+			return p
+	else:
+		d = []
+		if len(p) > 0:
+			p = " " + p[:-1]
+			for arg in p.split(' -'):
+				d.append("-" + arg)
+			d.pop(0)
+		return d
+
 def load(filename):
 	""" Load a JSON file.
 			@param filename: The filename to load from
@@ -279,3 +301,4 @@ if __name__ == '__main__':
 	_test("alphanum", ["Some escape attempt\"); cat /etc/passwd", True, True])
 	_test("list_files", ["/etc/httpd", "*.conf"])
 	_test("ask", ["Type something", "nothing"])
+	_test("args", [])
