@@ -2,7 +2,7 @@
 # Random utilities - (C) 2017 Patrick Lambert - http://dendory.net
 # Provided under the MIT License
 
-__VERSION__ = "2017.3.3"
+__VERSION__ = "2017.3.27"
 
 import re
 import os
@@ -20,11 +20,24 @@ import smtplib
 import urllib.parse
 import urllib.request
 
+def base36(number):
+	""" Converts an integer to a base36 string.
+			@param number: The number to convert
+	"""
+	base36 = ""
+	alphabet = string.digits + string.ascii_uppercase
+
+	while int(number) > 0:
+		number, i = divmod(int(number), len(alphabet))
+		base36 = alphabet[i] + base36
+
+	return base36
+
 def guid(length=16):
 	""" Return a unique ID based on the machine, current time in milliseconds, and random number.
 			@param length: The length of the ID (optional, defaults to 16 bytes)
 	"""
-	hw = str(hex(uuid.getnode() + int(time.time()*1000000)))[2:]
+	hw = str(base36(uuid.getnode() + int(time.time()*1000000)))
 	pad = ''.join(random.choice(string.ascii_uppercase + string.digits) for i in range(length-len(hw)))
 	return str(hw + pad).upper()
 
@@ -103,7 +116,7 @@ def now(timestamp=time.gmtime()):
 
 def hashfile(filename):
 	""" Return a unique hash for the content of a file.
-			@param filename: The file to hash.
+			@param filename: The file to hash
 	"""
 	BLOCKSIZE = 65536
 	hasher = hashlib.sha256()
@@ -302,3 +315,4 @@ if __name__ == '__main__':
 	_test("list_files", ["/etc/httpd", "*.conf"])
 	_test("ask", ["Type something", "nothing"])
 	_test("args", [])
+	_test("base36", [time.time()])
