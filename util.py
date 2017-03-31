@@ -20,6 +20,26 @@ import smtplib
 import urllib.parse
 import urllib.request
 
+def is_int(number):
+	""" Check if a variable can be cast as an int.
+			@param number: The number to check
+	"""
+	try:
+		x = int(number)
+		return True
+	except:
+		return False
+
+def is_float(number):
+	""" Check if a variable can be cast as a floating point.
+			@param number: The number to check
+	"""
+	try:
+		x = float(number)
+		return True
+	except:
+		return False
+
 def base36(number):
 	""" Converts an integer to a base36 string.
 			@param number: The number to convert
@@ -316,3 +336,5 @@ if __name__ == '__main__':
 	_test("ask", ["Type something", "nothing"])
 	_test("args", [])
 	_test("base36", [time.time()])
+	_test("is_int", ["23523"])
+	_test("is_float", ["364.234"])
