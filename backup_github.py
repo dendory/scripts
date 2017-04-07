@@ -4,7 +4,7 @@
 user = "dendory"
 target_file = "/storage/backups/github_backup.tgz"
 
-import util
+import connix as util
 import json
 import os
 
