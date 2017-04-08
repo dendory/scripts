@@ -35,7 +35,7 @@ rm -f /tmp/epel.rpm
 rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
 rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
-yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel
+yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel ntp
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
@@ -43,6 +43,7 @@ pip install mutagen ansible awscli certbot evernote Markdown MySQL-python
 pip3 install pycrypto boto3 connix
 python3 -m pip install -U discord.py
 systemctl disable firewalld
+systemctl start ntpd
 
 #
 # Install web server
