@@ -1,7 +1,7 @@
 #!/bin/bash
 # CentOS 7 bootstrapping script - Configuration:
 
-export NAME=%NAME%
+export NAME=my-new-server
 export DOMAIN=dendory.net
 export EMAIL=dendory@live.ca
 
@@ -15,17 +15,17 @@ echo "domain $DOMAIN" >> /etc/resolv.conf
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 chattr +i /etc/resolv.conf
 echo "preserve_hostname: true" >> /etc/cloud/cloud.cfg
+systemctl restart network
 
 #
 # Disable SELinux
 #
-systemctl restart network
 echo "SELINUX=disabled" > /etc/selinux/config
 echo "SELINUXTYPE=targeted" >> /etc/selinux/config
 setenforce 0
 
 #
-# Install EPEL, Nux and missing packages
+# Install EPEL, missing packages
 #
 yum -y install wget
 rpm --import https://ca.mirror.babylon.network/epel/RPM-GPG-KEY-EPEL-7
@@ -39,7 +39,7 @@ yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-p
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
-pip install mutagen ansible awscli certbot evernote Markdown MySQL-python
+pip install mutagen ansible awscli Markdown MySQL-python
 pip3 install pycrypto boto3 connix
 python3 -m pip install -U discord.py
 systemctl disable firewalld
