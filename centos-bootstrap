@@ -51,7 +51,7 @@ systemctl start ntpd
 yum -y install httpd php
 systemctl enable httpd
 systemctl start httpd
-echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+echo "<?php phpinfo(); ?>" > /var/www/html/info.php
 
 #
 # Install SSL support and LetsEncrypt

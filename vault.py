@@ -32,19 +32,21 @@ while True:
 	if r == "":
 		print("* Creating new entry.")
 		name = connix.ask("Name:")
-		found = False
-		for e in entries:
-			if e['name'].lower() == name.lower() or name == "":
-				if not found:
-					print("* Name is empty or already exists, aborting.")
-				found = True
-		if not found:
+		if name != "":
 			login = connix.ask("Login:")
-			secret = connix.ask("Secret:")
-			note = connix.ask("Note:")
-			newentry = {'name': name, 'login': login, 'secret': connix.encrypt(key, secret), 'note': note}
-			entries.append(newentry)
-			print("* Added.")
+			found = False
+			for e in entries:
+				if e['name'].lower() == name.lower() and e['login'].lower() == login.lower():
+					if not found:
+						print("* Name and login already exist, aborting.")
+					found = True
+			if not found:
+				type = "login"
+				secret = connix.ask("Secret:")
+				note = connix.ask("Note:")
+				newentry = {'name': name, 'login': login, 'secret': connix.encrypt(key, secret), 'note': note, 'type': type}
+				entries.append(newentry)
+				print("* Added.")
 	if connix.is_int(r):
 		i = 0
 		for entry in sorted(entries, key=itemgetter('name')):
