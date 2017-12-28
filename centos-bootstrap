@@ -28,20 +28,19 @@ setenforce 0
 # Install EPEL, missing packages
 #
 yum -y install wget
-rpm --import https://ca.mirror.babylon.network/epel/RPM-GPG-KEY-EPEL-7
-wget https://ca.mirror.babylon.network/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel.rpm
+rpm --import https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+wget https://archive.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel.rpm
 rpm -ivh /tmp/epel.rpm
 rm -f /tmp/epel.rpm
 rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
 rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
-yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel ntp
+yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel ntp redhat-rpm-config lynx
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
-pip install mutagen ansible awscli Markdown MySQL-python
-pip3 install pycrypto boto3 connix
-python3 -m pip install -U discord.py
+pip install mutagen ansible awscli Markdown
+pip3 install pycrypto boto3 connix python-twitter youtube_dl PyNaCl discord.py twine
 systemctl disable firewalld
 systemctl start ntpd
 
