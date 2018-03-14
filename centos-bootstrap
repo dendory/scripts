@@ -1,78 +1,93 @@
 #!/bin/bash
 # CentOS 7 bootstrapping script - Configuration:
 
-export NAME=my-new-server
-export DOMAIN=dendory.net
-export EMAIL=dendory@live.ca
+NAME=my-new-server
+DOMAIN=dendory.net
+EMAIL=dendory@live.ca
+DNS=8.8.8.8
+PROXY=
+INSTALL_APACHE=true
 
-#
-# Set hostname and networking
-#
+echo "### Configuring hostname and networking"
 echo "$NAME.$DOMAIN" > /etc/hostname
-chattr +i /etc/hostname
 echo "search $DOMAIN" > /etc/resolv.conf
 echo "domain $DOMAIN" >> /etc/resolv.conf
-echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-chattr +i /etc/resolv.conf
+echo "nameserver $DNS" >> /etc/resolv.conf
 echo "preserve_hostname: true" >> /etc/cloud/cloud.cfg
 systemctl restart network
 
-#
-# Disable SELinux
-#
+echo "### Disabling SELinux"
 echo "SELINUX=disabled" > /etc/selinux/config
 echo "SELINUXTYPE=targeted" >> /etc/selinux/config
 setenforce 0
 
-#
-# Install EPEL, missing packages
-#
+echo "### Configuring sudoers without passwords"
+sed -i '/%wheel/c\%wheel ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
+
+if [ ! -z "$PROXY" ]; then
+	echo "### Setting proxy"
+	echo "http_proxy=$PROXY" > /etc/environment
+	echo "https_proxy=$PROXY" >> /etc/environment
+	echo "HTTP_PROXY=$PROXY" >> /etc/environment
+	echo "HTTPS_PROXY=$PROXY" >> /etc/environment
+fi
+
+if yum list installed dnfdragora >/dev/null 2>&1; then
+	echo "### Removing graphical package manager"
+	yum -y remove dnfdragora
+fi
+
+echo "### Installing EPEL, other useful packages"
 yum -y install wget
-rpm --import https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+wget https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 -O /tmp/RPM-GPG-KEY-EPEL-7
+rpm --import /tmp/RPM-GPG-KEY-EPEL-7
 wget https://archive.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel.rpm
 rpm -ivh /tmp/epel.rpm
 rm -f /tmp/epel.rpm
 rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
 rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
 wget https://dendory.net/scripts/nanorc -O /etc/nanorc
-yum -y install nano scl-utils python34 python34-devel psmisc bind-utils python-pip python-devel libtool rpm-build ffmpeg ImageMagick ImageMagick-devel ntp redhat-rpm-config lynx
+yum -y install python34 python34-devel
+yum -y install python3 python3-devel
+yum -y install nano scl-utils psmisc bind-utils python-pip python-devel lynx ntp
+yum -y install libtool rpm-build redhat-rpm-config
+yum -y install ffmpeg
+yum -y install ImageMagick ImageMagick-devel
 curl https://bootstrap.pypa.io/get-pip.py | python3
 rm -f /usr/bin/pip
 ln -s /usr/bin/pip2.7 /usr/bin/pip
 pip install mutagen ansible awscli Markdown
 pip3 install pycrypto boto3 connix python-twitter youtube_dl PyNaCl discord.py twine
+
+echo "### Disabling firewall, enabling NTP"
 systemctl disable firewalld
 systemctl start ntpd
 
-#
-# Install web server
-#
-yum -y install httpd php
-systemctl enable httpd
-systemctl start httpd
-echo "<?php phpinfo(); ?>" > /var/www/html/info.php
-
-#
-# Install SSL support and LetsEncrypt
-#
-RESOLVED=`getent hosts $NAME.$DOMAIN`
-if [ ! -z "$RESOLVED" ]; then
-	yum -y install python-certbot-apache certbot mod_ssl
-	letsencrypt certonly --standalone --email $EMAIL -d $NAME.$DOMAIN -w /var/www/html --agree-tos --renew-by-default -n
-	mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.default
-	wget https://dendory.net/scripts/centos-httpd-ssl.conf -O /etc/httpd/conf/httpd.conf
-	sed -i "s/%HOSTNAME%/$NAME.$DOMAIN/g" /etc/httpd/conf/httpd.conf
-	systemctl restart httpd
-	crontab -l > /tmp/mycron
-	echo "0 0 1 * * /usr/sbin/certbot renew" >> /tmp/mycron
-	crontab /tmp/mycron
-	rm -f /tmp/mycron
+if $INSTALL_APACHE ; then
+	echo "### Installing Apache"
+	yum -y install httpd php
+	systemctl enable httpd
+	systemctl start httpd
+	echo "<?php phpinfo(); ?>" > /var/www/html/info.php
 fi
 
-#
-# Update the system
-#
+if $INSTALL_APACHE ; then
+	RESOLVED=`getent hosts $NAME.$DOMAIN`
+	if [ ! -z "$RESOLVED" ]; then
+		echo "### Installing LetsEncrypt"
+		yum -y install python-certbot-apache certbot mod_ssl
+		certbot certonly --standalone --email $EMAIL -d $NAME.$DOMAIN -w /var/www/html --agree-tos --renew-by-default -n
+		mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.default
+		wget https://dendory.net/scripts/centos-httpd-ssl.conf -O /etc/httpd/conf/httpd.conf
+		sed -i "s/%HOSTNAME%/$NAME.$DOMAIN/g" /etc/httpd/conf/httpd.conf
+		systemctl restart httpd
+		crontab -l > /tmp/mycron
+		echo "0 0 1 * * /usr/sbin/certbot renew" >> /tmp/mycron
+		crontab /tmp/mycron
+		rm -f /tmp/mycron
+	fi
+fi
+
+echo "### Updating the system"
 yum -y update
 yum -y install yum-cron
-reboot
-
