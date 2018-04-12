@@ -7,6 +7,7 @@ EMAIL=dendory@live.ca
 DNS=8.8.8.8
 PROXY=
 INSTALL_APACHE=true
+JOIN_AD=false
 
 echo "### Configuring hostname and networking"
 echo "$NAME.$DOMAIN" > /etc/hostname
@@ -86,6 +87,13 @@ if $INSTALL_APACHE ; then
 		crontab /tmp/mycron
 		rm -f /tmp/mycron
 	fi
+fi
+
+if $JOIN_AD ; then
+	echo "#### Joining AD domain"
+	yum -y install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools
+	realm join $DOMAIN
+	realm list
 fi
 
 echo "### Updating the system"
