@@ -1,28 +1,46 @@
 #!/usr/bin/python3
+#
+# This script allows the storage of secrets in an encrypted vault
+# Created by Patrick Lambert - http://dendory.net
 
 import os
 import connix
 import getpass
 from operator import itemgetter
 
+# Get master key and vault file
 key = getpass.getpass("Master key: ")
 vaultfile = os.path.join(os.path.expanduser("~"), ".vault")
 entries = []
 
+# Create vault file if it doesn't exist
 try:
 	entries = connix.load(vaultfile)
 except:
 	print("* Empty vault, creating new file.")
+	entries.append({'type': "verify", 'name': "_verify", 'secret': connix.encrypt(key, "verify")})
 	connix.save(vaultfile, entries)
 
 os.chmod(vaultfile, 0o600)
 filter = ""
 
+# Check if the master password is correct
+for entry in sorted(entries, key=itemgetter('name')):
+	if entry['type'] == "verify":
+		try:
+			if connix.decrypt(key, entry['secret']) != "verify":
+				print("ERROR - Invalid master key.")
+				quit(1)
+		except:
+			print("ERROR - Invalid master key.")
+			quit(1)
+
+# Main loop
 while True:
 	print()
 	i = 0
 	for entry in sorted(entries, key=itemgetter('name')):
-		if filter.lower() in entry['name'].lower():
+		if filter.lower() in entry['name'].lower() and entry['type'] != "verify":
 			print(str(i) + ": " + entry['name'] + " (" + entry['login'] + ")")
 		i = i + 1
 	filter = ""
@@ -65,16 +83,9 @@ while True:
 					print("* " + entry['name'])
 					print("Login: " + entry['login'])
 					entryok = True
-					try:
-						print("Secret: " + '*' * len(connix.decrypt(key, entry['secret'])))
-					except:
-						entryok = False
-						print("Secret: ERROR - Invalid master key")
+					print("Secret: " + '*' * len(connix.decrypt(key, entry['secret'])))
 					print("Note: " + entry['note'])
-					if entryok:
-						z = connix.ask("Press <E> to edit the entry, <V> to view the secret, <D> to delete it, <ENTER> to go back")
-					else:
-						z = connix.ask("Press <D> to delete the entry, <ENTER> to go back")
+					z = connix.ask("Press <E> to edit the entry, <V> to view the secret, <D> to delete it, <ENTER> to go back")
 					if z.lower() == 'q' or z == '':
 						break
 					if z.lower() == 'v':
