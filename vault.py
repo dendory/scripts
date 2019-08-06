@@ -6,6 +6,7 @@
 import os
 import connix
 import getpass
+import readline
 from operator import itemgetter
 
 # Get master key and vault file
