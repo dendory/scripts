@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # This script lists Wi-Fi signals nearby. It requires a Wi-Fi adapter to be connected.
+# Also requires 'wireless-tools' to be installed
 
 import os
 import connix
