@@ -13,6 +13,7 @@ bind ^Space mark all
 bind ^L copytext all
 bind ^N nextpage all
 bind ^P prevpage all
+bind ^F whereis all
 bind M-O insert all
 bind M-B browser all
 bind M-. nextbuf all
