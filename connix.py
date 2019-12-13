@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """ Connix is a general purpose Python 3.x library that contains a lot of commonly done operations inside of a single package.
-    (C) 2018 Patrick Lambert - http://dendory.net - Provided under the MIT License
+    (C) 2018-2019 Patrick Lambert - http://dendory.net - Provided under the MIT License
 """
 
-__VERSION__ = "1.16"
+__VERSION__ = "1.18"
 
 import re
 import os
@@ -210,6 +210,15 @@ def now():
 	""" Return the current UTC date and time in a standard format.
 	"""
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+
+def days_since(timestamp):
+	""" Return number of days since a specific UTC time and date.
+			@param timestamp: A time in 'YYYY-MM-DD HH:MM:SS' format
+	"""
+	x = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+	y = datetime.datetime.now()
+	z = y - x
+	return z.days
 
 def hashfile(filename):
 	""" Return a unique hash for the content of a file.
