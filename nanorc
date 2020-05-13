@@ -22,8 +22,5 @@ set tabsize 4
 set speller "aspell -x -c"
 set softwrap
 set nowrap
-set nohelp
 set multibuffer
-set const
-#set undo
 set morespace
